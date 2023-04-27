@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "786977304494",
+    "firebase_url": "https://flutter-app-bb256-default-rtdb.firebaseio.com",
     "project_id": "flutter-app-bb256",
     "storage_bucket": "flutter-app-bb256.appspot.com"
   },

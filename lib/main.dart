@@ -207,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.only(top: 20, bottom: 30),
+                          margin: const EdgeInsets.only(top: 10, bottom: 20),
                           width: 200,
                           child: ElevatedButton(
                             style: ButtonStyle(

@@ -6,16 +6,19 @@ import 'package:flutter_app_demo/login_page.dart';
 import 'package:flutter_app_demo/new_page.dart';
 import 'package:flutter_app_demo/signup_page.dart';
 import 'package:flutter_app_demo/user_profile.dart';
-import 'next_page.dart';
+import 'package:flutter_app_demo/next_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -241,31 +244,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 ),
-                // Expanded(
-                //   flex: 10,
-                //   child:  Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     crossAxisAlignment: CrossAxisAlignment.center,
-                //     children: [
-                //       Container(
-                //         margin: const EdgeInsets.only(right: 20),
-                //         child: const Text('App Logo'),
-                //       ),
-                //       IconButton(
-                //           onPressed: () {},
-                //           icon: Icon(Icons.book)
-                //       ),
-                //       IconButton(
-                //         onPressed: () {},
-                //         icon: Icon(Icons.computer),
-                //       )
                     ],
                   ),
           ),
         ),
             );
-    //       ],
-    //     ),
-    // );
   }
 }

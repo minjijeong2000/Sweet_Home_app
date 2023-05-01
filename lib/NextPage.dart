@@ -2,6 +2,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_demo/next_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_app_demo/user_profile.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+
 
 
 class NextPage extends StatefulWidget {
@@ -14,6 +18,13 @@ class NextPage extends StatefulWidget {
 class _NextPageState extends State<NextPage> {
 
   var choreList = [];
+
+  void _deleteChore(String key) {
+    FirebaseDatabase.instance.reference().child('chores/$key').remove();
+    setState(() {
+      choreList.removeWhere((chore) => chore['key'] == key);
+    });
+  }
 
   _NextPageState() {
 
@@ -32,6 +43,7 @@ class _NextPageState extends State<NextPage> {
         values.forEach((key, value) {
           print(key);
           print(value);
+          value['key'] = key;
           choreTempList.add(value);
         });
         print("Final Chore List:");
@@ -50,43 +62,57 @@ class _NextPageState extends State<NextPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Schedule',
+          style: GoogleFonts.caveat(fontSize: 30, fontWeight: FontWeight.bold
+          ),
+        ),
+        actions: [
+          Image(
+              image: AssetImage('assets/homelogo.png')
+          ),
+        ],
+        backgroundColor: const Color(0xFFFF5722),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            const DrawerHeader(
+                decoration: BoxDecoration(
+                    color: Colors.deepOrange
+                ),
+                child: Text('Menu')
+            ),
+            ListTile(
+              title: Text('Create a new chore', style: GoogleFonts.caveat(),),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserProfilePage()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Who is..?', style: GoogleFonts.caveat(),),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MySecondPage()),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Row(
               children: [
-                Expanded(
-                  flex: 15,
-                  child: Container(
-                    child: IconButton(
-                      icon: Icon(Icons.menu),
-                      color: Colors.deepOrangeAccent,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MySecondPage()),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 70,
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 20, bottom: 20, left: 80),
-                    child: Text('Schedule',
-                      style: GoogleFonts.caveat(
-                          fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 15,
-                  child: Container(child: Image(
-                      image: AssetImage('assets/homelogo.png'),
-                  ),
-                  ),
-                ),
               ],
             ),
             Container(
@@ -134,6 +160,10 @@ class _NextPageState extends State<NextPage> {
                           )
                         ],
                       ),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () => _deleteChore(choreList[index]['key']),
                     ),
                   );
                 },

@@ -216,9 +216,7 @@ class _MySecondPageState extends State<MySecondPage> {
               )
             ],
           ),
-        )
-          ]
-        ),
+        )]),
     );
   }
 }

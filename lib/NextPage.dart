@@ -1,12 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_demo/next_page.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_app_demo/user_profile.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
-
-
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NextPage extends StatefulWidget {
   const NextPage({Key? key}) : super(key: key);
@@ -17,7 +15,33 @@ class NextPage extends StatefulWidget {
 
 class _NextPageState extends State<NextPage> {
 
+  final FirebaseMessaging messaging = FirebaseMessaging.instance;
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+
   var choreList = [];
+
+  // Future<void> _scheduleNotification(String choreName, String choreDay, DateTime scheduledTime) async {
+  //   if (DateTime.now().weekday == choreDay) {
+  //     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+  //       'channel id',
+  //       'channel name',
+  //       importance: Importance.max,
+  //       priority: Priority.high,
+  //     );
+  //     var platformChannelSpecifics = NotificationDetails(
+  //       android: androidPlatformChannelSpecifics,
+  //     );
+  //     await _flutterLocalNotificationsPlugin.schedule(
+  //       0,
+  //       'Chore reminder',
+  //       'Time to do $choreName!',
+  //       scheduledTime,
+  //       platformChannelSpecifics,
+  //     );
+  //   }
+  // }
+
 
   void _deleteChore(String key) {
     FirebaseDatabase.instance.reference().child('chores/$key').remove();
@@ -26,7 +50,9 @@ class _NextPageState extends State<NextPage> {
     });
   }
 
-  _NextPageState() {
+  @override
+  void initState() {
+    super.initState();
 
     FirebaseDatabase.instance.reference().child("chores").once()
         .then((databaseEvent) {
@@ -45,18 +71,26 @@ class _NextPageState extends State<NextPage> {
           print(value);
           value['key'] = key;
           choreTempList.add(value);
+          // DateTime scheduledTime = DateTime.parse(value['date'] + ' ' + value['time']);
+          // _scheduleNotification(value['name'], value['day'], scheduledTime);
         });
         print("Final Chore List:");
         print(choreTempList);
-        choreList = choreTempList;
         setState(() {
-
+          choreList = choreTempList;
         });
       }
     }).catchError((error) {
       print("Failed to load the data");
       print(error);
     });
+
+    var initializationSettingsAndroid =
+    AndroidInitializationSettings('ic_launcher');
+    var initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+    );
+    _flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
   @override

@@ -1,10 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_demo/NextPage.dart';
-import 'package:flutter_app_demo/new_page.dart';
 import 'package:flutter_app_demo/next_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:day_picker/day_picker.dart';
 
 

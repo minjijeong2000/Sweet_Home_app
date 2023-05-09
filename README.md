@@ -1,16 +1,11 @@
-# flutter_app_demo
+# Sweet Home: Home Cleaning Tracker
 
-A new Flutter project.
+This app is simply a home cleaning tracker where you set up a schedule for cleaning your home. You can create multiple tasks for the chores and when the time arrives, it will remind you to do a certain chore. If you are living with your family/roommates, you can also spin the roulette to pick a person randomly and whoever is chosen will do that chore for that day!
 
-## Getting Started
+## What I used in this application
 
-This project is a starting point for a Flutter application.
+This application is a flutter application using dart language.
 
-A few resources to get you started if this is your first Flutter project:
+## Link to this application on google play
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+https://play.google.com/store/apps/details?id=edu.cpp.cs4750.example1.flutter_app_demo
